@@ -8,7 +8,7 @@ const Weather = props => {
         {props.icon ? (
           <img
             className="img-fluid"
-            src={`http://openweathermap.org/img/w/${props.icon}.png`}
+            src={`https://openweathermap.org/img/w/${props.icon}.png`}
           />
         ) : null}
       </h5>
