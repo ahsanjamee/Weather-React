@@ -17,7 +17,8 @@ class App extends React.Component {
       minTemp: undefined,
       maxTemp: undefined,
       icon: undefined,
-      error: false
+      error: false,
+      notFound: false
     };
   }
 
@@ -38,15 +39,23 @@ class App extends React.Component {
 
       console.log(response);
 
-      this.setState({
-        city: response.name,
-        temp: this.calCell(response.main.temp),
-        description: response.weather[0].description,
-        minTemp: this.calCell(response.main.temp_min),
-        maxTemp: this.calCell(response.main.temp_max),
-        icon: response.weather[0].icon
-      });
-    } else {
+        if(response.cod === '404'){
+          this.setState({ notFound: true });
+          setTimeout(() => {
+            this.setState({ notFound: false });
+          }, 3000);
+        }else{
+          this.setState({
+            city: response.name,
+            temp: this.calCell(response.main.temp),
+            description: response.weather[0].description,
+            minTemp: this.calCell(response.main.temp_min),
+            maxTemp: this.calCell(response.main.temp_max),
+            icon: response.weather[0].icon
+          });
+        } 
+      }
+    else {
       this.setState({ error: true });
       setTimeout(() => {
         this.setState({ error: false });
@@ -57,7 +66,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Form loadWeather={this.getWeather} error={this.state.error} />
+        <Form loadWeather={this.getWeather} error={this.state.error} notFound={this.state.notFound} />
         <Weather
           city={this.state.city}
           temp={this.state.temp}

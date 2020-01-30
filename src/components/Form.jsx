@@ -9,10 +9,18 @@ class Form extends React.Component {
       </div>
     );
   }
+  notFound() {
+    return (
+      <div className="alert alert-danger" role="alert">
+        City not found.
+      </div>
+    );
+  }
   render() {
     return (
       <form className="mt-5 mb-5" onSubmit={this.props.loadWeather}>
         <div>{this.props.error ? this.error() : null}</div>
+        <div>{this.props.notFound ? this.notFound() : null}</div>
         <div className="container">
           <div className="row">
             <div className="col-md-3"></div>
